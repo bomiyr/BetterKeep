@@ -14,6 +14,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "BetterKeep"
-include (":app")
-include (":annotations")
-include (":processor")
+include(":app")
+include(":annotations")
+include(":processor")

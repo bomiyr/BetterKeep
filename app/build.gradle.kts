@@ -1,7 +1,7 @@
 plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
-    id ("com.google.devtools.ksp") version("1.5.31-1.0.0")
+    id("com.android.application")
+    id("kotlin-android")
+    id("com.google.devtools.ksp") version ("1.5.31-1.0.0")
 }
 
 android {
@@ -20,7 +20,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles (getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -33,11 +36,11 @@ android {
 }
 
 dependencies {
-    implementation( project(":annotations"))
+    implementation(project(":annotations"))
 
-    ksp( project(":processor"))
+    ksp(project(":processor"))
 
-    testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }

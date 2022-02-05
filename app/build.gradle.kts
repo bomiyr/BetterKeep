@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("com.google.devtools.ksp") version ("1.5.31-1.0.0")
+    id("com.google.devtools.ksp") version ("1.6.10-1.0.2")
     id("com.github.bomiyr.betterkeep.gradleplugin")
 }
 

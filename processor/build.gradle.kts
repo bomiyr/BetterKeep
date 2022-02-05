@@ -10,5 +10,5 @@ java {
 dependencies {
     implementation(project(":annotations"))
     implementation(project(":rulesgenerator"))
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.5.31-1.0.1")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.2")
 }

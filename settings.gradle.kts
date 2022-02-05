@@ -1,11 +1,12 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        mavenLocal()
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
@@ -17,3 +18,5 @@ rootProject.name = "BetterKeep"
 include(":app")
 include(":annotations")
 include(":processor")
+include(":rulesgenerator")
+include(":GradlePlugin")

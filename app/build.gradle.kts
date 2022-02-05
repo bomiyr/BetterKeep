@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("com.google.devtools.ksp") version ("1.5.31-1.0.0")
+    id("com.github.bomiyr.betterkeep.gradleplugin")
 }
 
 android {
@@ -19,11 +20,22 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("dev") {
+            dimension = "version"
+        }
+        create("prod") {
+            dimension = "version"
+
         }
     }
     compileOptions {

@@ -8,6 +8,10 @@ sealed class MemberSpec {
     }
 }
 
+object AnyFieldOrMethod : MemberSpec() {
+    override val value: String = "*"
+}
+
 class FieldSpec(override val value: String) : MemberSpec() {
 
 

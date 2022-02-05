@@ -2,7 +2,7 @@ package com.github.bomiyr.betterkeep.example
 
 import com.github.bomiyr.betterkeep.annotations.BetterKeep
 
-@BetterKeep
+@BetterKeep(false)
 class TestClass {
 
     @BetterKeep

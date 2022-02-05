@@ -1,6 +1,7 @@
 package com.github.bomiyr.betterkeep.processor
 
 import com.github.bomiyr.betterkeep.annotations.BetterKeep
+import com.github.bomiyr.betterkeep.rulesgenerator.AnyFieldOrMethod
 import com.github.bomiyr.betterkeep.rulesgenerator.ClassNameSpec
 import com.github.bomiyr.betterkeep.rulesgenerator.classDef
 import com.google.devtools.ksp.closestClassDeclaration
@@ -34,9 +35,16 @@ class BetterKeepVisitor(env: SymbolProcessorEnvironment) : KSVisitorVoid() {
                 it.annotationType.resolve().declaration.qualifiedName?.asString() == BetterKeep::class.qualifiedName
             }
             .forEach {
+
+                val keepAllMembers = it.arguments.firstOrNull { argument ->
+                    argument.name?.asString() == "keepAllMembers"
+                }?.value == true
+
                 val proguardClassDef = classDef {
                     names += ClassNameSpec(className)
-
+                    if (keepAllMembers) {
+                        members += AnyFieldOrMethod
+                    }
                 }
                 codeGenerator.createNewFile(
                     Dependencies(aggregating = false, srcFile),

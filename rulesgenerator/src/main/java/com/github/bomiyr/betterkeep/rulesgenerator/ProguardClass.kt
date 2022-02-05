@@ -80,11 +80,12 @@ class ClassDef {
         }
 
         if (members.isNotEmpty()) {
-            stringBuilder.append("\n")
-                .append("{").append("\n")
+            stringBuilder
+                .append(" {").append("\n")
 
-            members.joinToString(separator = "\n\n") { it.toString() }
-
+            stringBuilder.append(
+                members.joinToString(separator = "\n\n") { "    $it;" }
+            )
             stringBuilder.append("\n")
                 .append("}")
         }

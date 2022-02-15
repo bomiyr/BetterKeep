@@ -27,6 +27,8 @@ class BetterKeepPlugin : Plugin<Project> {
                 )
 
                 it.proguardFiles.add(RegularFile { proguardFile })
+
+                it.packaging.resources.excludes.add("**.BetterKeepPro")
             }
         }
     }

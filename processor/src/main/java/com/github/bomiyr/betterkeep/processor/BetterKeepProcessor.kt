@@ -43,7 +43,7 @@ class BetterKeepProcessor(private val environment: SymbolProcessorEnvironment) :
                 Dependencies(false, processedClasses.first()),
                 "",
                 "betterkeep-config",
-                "pro"
+                "BetterKeepPro"
             )
 
             configFile.bufferedWriter().use { writer ->

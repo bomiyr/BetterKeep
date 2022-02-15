@@ -50,7 +50,7 @@ class BetterKeepVisitor(env: SymbolProcessorEnvironment) : KSVisitorVoid() {
                     Dependencies(aggregating = false, srcFile),
                     packageName,
                     fileName,
-                    "pro"
+                    "BetterKeepPro"
                 ).writer()
                     .use {
                         it.write(proguardClassDef.toString())

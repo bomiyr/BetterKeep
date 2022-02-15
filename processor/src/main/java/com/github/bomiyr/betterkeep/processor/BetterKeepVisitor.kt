@@ -1,9 +1,7 @@
 package com.github.bomiyr.betterkeep.processor
 
 import com.github.bomiyr.betterkeep.annotations.BetterKeep
-import com.github.bomiyr.betterkeep.rulesgenerator.AnyFieldOrMethod
-import com.github.bomiyr.betterkeep.rulesgenerator.ClassNameSpec
-import com.github.bomiyr.betterkeep.rulesgenerator.classDef
+import com.github.bomiyr.betterkeep.rulesgenerator.*
 import com.google.devtools.ksp.closestClassDeclaration
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
@@ -36,6 +34,10 @@ class BetterKeepVisitor(env: SymbolProcessorEnvironment) : KSVisitorVoid() {
             }
             .forEach {
 
+                val keepClass = it.arguments.firstOrNull { argument ->
+                    argument.name?.asString() == "keepClass"
+                }?.value == true
+
                 val keepAllMembers = it.arguments.firstOrNull { argument ->
                     argument.name?.asString() == "keepAllMembers"
                 }?.value == true
@@ -46,6 +48,11 @@ class BetterKeepVisitor(env: SymbolProcessorEnvironment) : KSVisitorVoid() {
                         members += AnyFieldOrMethod
                     }
                 }
+                val proguardRule = if (keepClass) {
+                    keep(proguardClassDef)
+                } else {
+                    keepClassMembers(proguardClassDef)
+                }
                 codeGenerator.createNewFile(
                     Dependencies(aggregating = false, srcFile),
                     packageName,
@@ -53,7 +60,7 @@ class BetterKeepVisitor(env: SymbolProcessorEnvironment) : KSVisitorVoid() {
                     "BetterKeepPro"
                 ).writer()
                     .use {
-                        it.write(proguardClassDef.toString())
+                        it.write(proguardRule)
                         it.flush()
                     }
             }

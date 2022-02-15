@@ -89,7 +89,7 @@ class ClassDef {
             stringBuilder.append("\n")
                 .append("}")
         }
-        return "-keep $stringBuilder"
+        return stringBuilder.toString()
     }
 }
 
@@ -101,6 +101,19 @@ fun classDef(function: ClassDef.() -> Unit): ClassDef {
         }
 }
 
+/**
+ * Class and members will not be removed or renamed
+ */
+fun keep(classDef: ClassDef): String{
+    return "-keep $classDef"
+}
+
+/**
+ * Class and members will not be renamed, but can be removed if unused
+ */
+fun keepClassMembers(classDef: ClassDef): String{
+    return "-keepclassmembers $classDef"
+}
 
 fun test() {
     classDef {

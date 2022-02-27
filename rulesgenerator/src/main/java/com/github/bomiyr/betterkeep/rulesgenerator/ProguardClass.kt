@@ -101,18 +101,50 @@ fun classDef(function: ClassDef.() -> Unit): ClassDef {
         }
 }
 
+enum class KeepModifiers {
+    AllowShrinking {
+        override fun toString(): String {
+            return "allowshrinking"
+        }
+    },
+    AllowObfuscation {
+        override fun toString(): String {
+            return "allowobfuscation"
+        }
+    },
+    AllowOptimisation {
+        override fun toString(): String {
+            return "allowoptimization"
+        }
+    },
+    IncludeCode {
+        override fun toString(): String {
+            return "includecode"
+        }
+    },
+    IncludeDescriptorClasses {
+        override fun toString(): String {
+            return "includedescriptorclasses"
+        }
+    }
+}
+
 /**
  * Class and members will not be removed or renamed
  */
-fun keep(classDef: ClassDef): String{
-    return "-keep $classDef"
+fun keep(classDef: ClassDef, modifiers: Set<KeepModifiers> = emptySet()): String {
+    return "-keep${modifiersToString(modifiers)} $classDef"
 }
 
 /**
  * Class and members will not be renamed, but can be removed if unused
  */
-fun keepClassMembers(classDef: ClassDef): String{
-    return "-keepclassmembers $classDef"
+fun keepClassMembers(classDef: ClassDef, modifiers: Set<KeepModifiers> = emptySet()): String {
+    return "-keepclassmembers${modifiersToString(modifiers)} $classDef"
+}
+
+private fun modifiersToString(modifiers: Set<KeepModifiers>): String {
+    return if (modifiers.isNotEmpty()) modifiers.joinToString(separator = ",", prefix = ",") else ""
 }
 
 fun test() {

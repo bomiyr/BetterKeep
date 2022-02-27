@@ -6,6 +6,7 @@ import com.google.devtools.ksp.closestClassDeclaration
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
+import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 
@@ -48,10 +49,13 @@ class BetterKeepVisitor(env: SymbolProcessorEnvironment) : KSVisitorVoid() {
                         members += AnyFieldOrMethod
                     }
                 }
+
+                val keepModifiers = generateKeepModifiers(it)
+
                 val proguardRule = if (keepClass) {
-                    keep(proguardClassDef)
+                    keep(proguardClassDef, keepModifiers)
                 } else {
-                    keepClassMembers(proguardClassDef)
+                    keepClassMembers(proguardClassDef, keepModifiers)
                 }
                 codeGenerator.createNewFile(
                     Dependencies(aggregating = false, srcFile),
@@ -64,6 +68,51 @@ class BetterKeepVisitor(env: SymbolProcessorEnvironment) : KSVisitorVoid() {
                         it.flush()
                     }
             }
+    }
+
+    private fun generateKeepModifiers(it: KSAnnotation): MutableSet<KeepModifiers> {
+        val allowShrinking = it.arguments.firstOrNull { argument ->
+            argument.name?.asString() == "allowShrinking"
+        }?.value == true
+
+        val allowObfuscation = it.arguments.firstOrNull { argument ->
+            argument.name?.asString() == "allowObfuscation"
+        }?.value == true
+
+        val allowOptimization = it.arguments.firstOrNull { argument ->
+            argument.name?.asString() == "allowOptimization"
+        }?.value == true
+
+        val includeDescriptorClasses = it.arguments.firstOrNull { argument ->
+            argument.name?.asString() == "includeDescriptorClasses"
+        }?.value == true
+
+        val includeCode = it.arguments.firstOrNull { argument ->
+            argument.name?.asString() == "includeCode"
+        }?.value == true
+
+        val keepModifiers = mutableSetOf<KeepModifiers>()
+
+        if (allowShrinking) {
+            keepModifiers += KeepModifiers.AllowShrinking
+        }
+
+        if (allowObfuscation) {
+            keepModifiers += KeepModifiers.AllowObfuscation
+        }
+
+        if (allowOptimization) {
+            keepModifiers += KeepModifiers.AllowOptimisation
+        }
+
+        if (includeCode) {
+            keepModifiers += KeepModifiers.IncludeCode
+        }
+
+        if (includeDescriptorClasses) {
+            keepModifiers += KeepModifiers.IncludeDescriptorClasses
+        }
+        return keepModifiers
     }
 
     fun getClassName(classDeclaration: KSClassDeclaration, innerClassName: String?): String {

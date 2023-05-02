@@ -1,8 +1,11 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        mavenLocal()
+        google()
+        mavenCentral()
     }
+
+    includeBuild("GradlePlugin")
 }
 
 dependencyResolutionManagement {
@@ -19,4 +22,4 @@ include(":app")
 include(":annotations")
 include(":processor")
 include(":rulesgenerator")
-include(":GradlePlugin")
+

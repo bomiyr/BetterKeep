@@ -1,18 +1,20 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("com.google.devtools.ksp") version ("1.6.10-1.0.2")
-    id("com.github.bomiyr.betterkeep.gradleplugin")
+    @Suppress("DSL_SCOPE_VIOLATION")
+    alias(libs.plugins.kotlin.ksp)
+    id("com.github.bomiyr.bkeep")
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.github.bomiyr.betterkeep.example"
         minSdk = 16
-        targetSdk = 31
+        targetSdk = 33
         versionCode = 1
+
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -39,12 +41,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+
+    namespace = "com.github.bomiyr.betterkeep.example"
 }
 
 dependencies {
@@ -52,7 +56,7 @@ dependencies {
 
     ksp(project(":processor"))
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }

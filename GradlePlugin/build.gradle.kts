@@ -1,30 +1,28 @@
 plugins {
-    id ("java-gradle-plugin")
-    id("kotlin")
-    id ("maven-publish")
+    id("java-gradle-plugin")
+    @Suppress("DSL_SCOPE_VIOLATION")
+    alias(libs.plugins.kotlin.jvm)
+    id("maven-publish")
 }
 
 dependencies {
-    implementation ("com.android.tools.build:gradle:7.1.1")
+    compileOnly(libs.android.gradle.plugin)
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
-
 
 gradlePlugin {
     plugins {
         create("better-keep-plugin") {
             version = "0.1"
-            id = "com.github.bomiyr.betterkeep.gradleplugin"
+            id = "com.github.bomiyr.bkeep"
             implementationClass = "com.github.bomiyr.betterkeep.gradle.plugin.BetterKeepPlugin"
         }
     }
 }
-
-
 
 //publishing {
 //    publications {

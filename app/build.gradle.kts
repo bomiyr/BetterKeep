@@ -60,3 +60,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
+
+ksp {
+    arg(bkeep.ARG_DEFAULT_FLAGS, (bkeep.SHRINK or bkeep.OBFUSCATE or bkeep.OPTIMIZE).toString())
+}

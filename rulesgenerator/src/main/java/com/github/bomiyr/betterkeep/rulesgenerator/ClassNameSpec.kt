@@ -84,7 +84,7 @@ class ClassNameSpec(val pattern: String) {
         }
 
         fun appendAnyPackage(): Builder {
-            appendAnyNameNumbered()
+            appendAnyPackageNumbered()
             return this
         }
 

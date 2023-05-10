@@ -96,7 +96,7 @@ class FieldSpec(override val value: String) : MemberSpec() {
             }
 
             fun field(type: TypeSpec, memberNameSpec: MemberNameSpec): Builder {
-                fieldDefinition = "${type.value} $memberNameSpec"
+                fieldDefinition = "${type.value} ${memberNameSpec.value}"
                 return this
             }
 
@@ -115,7 +115,7 @@ class FieldSpec(override val value: String) : MemberSpec() {
                         .append("\n")
                 }
 
-                stringBuilder.append(fieldDefinition).append("\n")
+                stringBuilder.append(fieldDefinition)
                 return FieldSpec(stringBuilder.toString())
             }
         }
@@ -238,7 +238,12 @@ class MethodSpec(override val value: String) : MemberSpec() {
             }
 
             fun method(returnType: TypeSpec, name: MemberNameSpec): Builder {
-                methodDefinition = "${returnType.value} $name(...)"
+                methodDefinition = "${returnType.value} ${name.value}()"
+                return this
+            }
+
+            fun methodWithAnyArguments(returnType: TypeSpec, name: MemberNameSpec): Builder {
+                methodDefinition = "${returnType.value} ${name.value}(...)"
                 return this
             }
 
@@ -248,7 +253,7 @@ class MethodSpec(override val value: String) : MemberSpec() {
                 vararg arguments: TypeSpec
             ): Builder {
                 methodDefinition =
-                    "${returnType.value} $name(${arguments.joinToString(separator = ",") { it.value }})"
+                    "${returnType.value} ${name.value}(${arguments.joinToString(separator = ",") { it.value }})"
                 return this
             }
 
@@ -267,7 +272,7 @@ class MethodSpec(override val value: String) : MemberSpec() {
                         .append("\n")
                 }
 
-                stringBuilder.append(methodDefinition).append("\n")
+                stringBuilder.append(methodDefinition)
                 return MethodSpec(stringBuilder.toString())
             }
         }

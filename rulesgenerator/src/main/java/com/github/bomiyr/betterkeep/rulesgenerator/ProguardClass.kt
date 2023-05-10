@@ -71,7 +71,7 @@ class ClassDef {
         stringBuilder.append(type.toString()).append(" ")
 
         if (names.isNotEmpty()) {
-            val classNames = names.joinToString(separator = ",") { it.pattern }
+            val classNames = names.joinToString(separator = ",") { it.toString() }
             stringBuilder.append(classNames)
         }
 
@@ -143,7 +143,7 @@ fun keepClassMembers(classDef: ClassDef, modifiers: Set<KeepModifiers> = emptySe
     return "-keepclassmembers${modifiersToString(modifiers)} $classDef"
 }
 
-private fun modifiersToString(modifiers: Set<KeepModifiers>): String {
+internal fun modifiersToString(modifiers: Set<KeepModifiers>): String {
     return if (modifiers.isNotEmpty()) modifiers.joinToString(separator = ",", prefix = ",") else ""
 }
 
